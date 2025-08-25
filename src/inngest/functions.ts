@@ -109,7 +109,7 @@ export const generateSong = inngest.createFunction(
 
         // Description of a song
         if (song.fullDescribedSong) {
-          endpoint = env.GENERATE_FROM_DESCRIPTION || "";
+          endpoint = env.GENERATE_FROM_DESCRIPTION ?? "";
           body = {
             full_described_song: song.fullDescribedSong,
             ...commomParams,
@@ -117,7 +117,7 @@ export const generateSong = inngest.createFunction(
         }
         // Custom mode: Lyrics + prompt
         else if (song.lyrics && song.prompt) {
-          endpoint = env.GENERATE_WITH_LYRICS || "";
+          endpoint = env.GENERATE_WITH_LYRICS ?? "";
           body = {
             lyrics: song.lyrics,
             prompt: song.prompt,
@@ -126,7 +126,7 @@ export const generateSong = inngest.createFunction(
         }
         // Custom mode: Prompt + described lyrics
         else if (song.describedLyrics && song.prompt) {
-          endpoint = env.GENERATE_FROM_DESCRIBED_LYRICS || "";
+          endpoint = env.GENERATE_FROM_DESCRIBED_LYRICS ?? "";
           body = {
             described_lyrics: song.describedLyrics,
             prompt: song.prompt,
@@ -161,8 +161,8 @@ export const generateSong = inngest.createFunction(
         body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
-          "Modal-Key": env.MODAL_KEY || "",
-          "Modal-Secret": env.MODAL_SECRET || "",
+          "Modal-Key": env.MODAL_KEY ?? "",
+          "Modal-Secret": env.MODAL_SECRET ?? "",
         },
       });
 
