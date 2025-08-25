@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Music } from "lucide-react";
 import { headers } from "next/headers";
@@ -55,7 +54,6 @@ export default async function Page() {
         ? await getPresignedUrl(song.thumbnailS3Key)
         : null;
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return { ...song, thumbnailUrl };
     }),
   );
@@ -67,7 +65,6 @@ export default async function Page() {
     .filter((song) => song.createdAt >= twoDaysAgo)
     .slice(0, 10);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const trendingSongIds = new Set(trendingSongs.map((song) => song.id));
 
   const categorizedSongs = songsWithUrls
@@ -83,7 +80,7 @@ export default async function Page() {
             acc[primaryCategory.name]!.push(song);
           }
         }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
         return acc;
       },
       {} as Record<string, Array<(typeof songsWithUrls)[number]>>,
@@ -130,7 +127,6 @@ export default async function Page() {
             <h2 className="text-xl font-semibold">{category}</h2>
             <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
               {songs.map((song) => (
-                 
                 <SongCard key={song.id} song={song} />
               ))}
             </div>

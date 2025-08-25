@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+ 
+ 
+ 
+ 
+ 
 "use client";
 
 import type { Category, Like, Song } from "@prisma/client";
@@ -27,7 +27,6 @@ type SongWithRelation = Song & {
 
 export function SongCard({ song }: { song: SongWithRelation }) {
   const [isLoading, setIsLoading] = useState(false);
-  const setTrack = usePlayerStore((state: { setTrack: unknown; }) => state.setTrack);
   const [isLiked, setIsLiked] = useState(
     song.likes ? song.likes.length > 0 : false,
   );

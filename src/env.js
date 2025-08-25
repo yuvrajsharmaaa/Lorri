@@ -29,8 +29,8 @@ export const env = createEnv({
     GENERATE_FROM_DESCRIBED_LYRICS: z.string().url().optional(),
     GENERATE_WITH_LYRICS: z.string().url().optional(),
 
-    POLAR_ACCESS_TOKEN: z.string().optional(),
-    POLAR_WEBHOOK_SECRET: z.string().optional(),
+    //POLAR_ACCESS_TOKEN: z.string().optional(),
+    //POLAR_WEBHOOK_SECRET: z.string().optional(),
   },
 
   client: {
@@ -52,8 +52,8 @@ export const env = createEnv({
     GENERATE_FROM_DESCRIPTION: process.env.GENERATE_FROM_DESCRIPTION,
     GENERATE_FROM_DESCRIBED_LYRICS: process.env.GENERATE_FROM_DESCRIBED_LYRICS,
     GENERATE_WITH_LYRICS: process.env.GENERATE_WITH_LYRICS,
-    POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN,
-    POLAR_WEBHOOK_SECRET: process.env.POLAR_WEBHOOK_SECRET,
+    //POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN,
+    //POLAR_WEBHOOK_SECRET: process.env.POLAR_WEBHOOK_SECRET,
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },
 

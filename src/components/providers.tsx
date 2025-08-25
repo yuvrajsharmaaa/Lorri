@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-"use client"
+"use client";
 
-import { AuthUIProvider } from '@daveyplate/better-auth-ui'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { authClient } from '~/lib/auth-client'
+import { AuthUIProvider } from "@daveyplate/better-auth-ui";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { authClient } from "~/lib/auth-client";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <AuthUIProvider
@@ -21,5 +20,5 @@ export function Providers({ children }: { children: React.ReactNode }) {
     >
       {children}
     </AuthUIProvider>
-  )
+  );
 }

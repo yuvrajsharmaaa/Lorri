@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import { db } from "~/server/db";
 import { inngest } from "./client";
 import { env } from "~/env";
@@ -17,16 +12,16 @@ export const generateSong = inngest.createFunction(
     onFailure: async ({ event, error }) => {
       console.error("Song generation failed:", error);
       console.log("Event data:", event.data);
-      
+
       // ✅ Fixed: Access songId directly from event.data
       const eventData = event.data as { songId?: string; userId?: string };
       const songId = eventData?.songId;
-      
+
       if (!songId) {
         console.error("No songId found in failed event:", event.data);
         return;
       }
-      
+
       try {
         await db.song.update({
           where: {
@@ -49,99 +44,103 @@ export const generateSong = inngest.createFunction(
       songId: string;
       userId: string;
     };
-    
+
     const { songId, userId } = eventData;
-    
+
     if (!songId || !userId) {
-      throw new Error(`Missing required data: songId=${songId}, userId=${userId}`);
+      throw new Error(
+        `Missing required data: songId=${songId}, userId=${userId}`,
+      );
     }
-    
+
     console.log(`Processing song generation: ${songId} for user: ${userId}`);
 
-    const { userId: validatedUserId, credits, endpoint, body } = await step.run(
-      "check-credits",
-      async () => {
-        const song = await db.song.findUniqueOrThrow({
-          where: {
-            id: songId,
-          },
-          select: {
-            user: {
-              select: {
-                id: true,
-                credits: true,
-              },
+    const {
+      userId: validatedUserId,
+      credits,
+      endpoint,
+      body,
+    } = await step.run("check-credits", async () => {
+      const song = await db.song.findUniqueOrThrow({
+        where: {
+          id: songId,
+        },
+        select: {
+          user: {
+            select: {
+              id: true,
+              credits: true,
             },
-            prompt: true,
-            lyrics: true,
-            fullDescribedSong: true,
-            describedLyrics: true,
-            instrumental: true,
-            guidanceScale: true,
-            inferStep: true,
-            audioDuration: true,
-            seed: true,
           },
-        });
+          prompt: true,
+          lyrics: true,
+          fullDescribedSong: true,
+          describedLyrics: true,
+          instrumental: true,
+          guidanceScale: true,
+          inferStep: true,
+          audioDuration: true,
+          seed: true,
+        },
+      });
 
-        type RequestBody = {
-          guidance_scale?: number;
-          infer_step?: number;
-          audio_duration?: number;
-          seed?: number;
-          full_described_song?: string;
-          prompt?: string;
-          lyrics?: string;
-          described_lyrics?: string;
-          instrumental?: boolean;
+      type RequestBody = {
+        guidance_scale?: number;
+        infer_step?: number;
+        audio_duration?: number;
+        seed?: number;
+        full_described_song?: string;
+        prompt?: string;
+        lyrics?: string;
+        described_lyrics?: string;
+        instrumental?: boolean;
+      };
+
+      let endpoint = "";
+      let body: RequestBody = {};
+
+      const commomParams = {
+        guidance_scale: song.guidanceScale ?? undefined,
+        infer_step: song.inferStep ?? undefined,
+        audio_duration: song.audioDuration ?? undefined,
+        seed: song.seed ?? undefined,
+        instrumental: song.instrumental ?? undefined,
+      };
+
+      // Description of a song
+      if (song.fullDescribedSong) {
+        endpoint = env.GENERATE_FROM_DESCRIPTION ?? "";
+        body = {
+          full_described_song: song.fullDescribedSong,
+          ...commomParams,
         };
-
-        let endpoint = "";
-        let body: RequestBody = {};
-
-        const commomParams = {
-          guidance_scale: song.guidanceScale ?? undefined,
-          infer_step: song.inferStep ?? undefined,
-          audio_duration: song.audioDuration ?? undefined,
-          seed: song.seed ?? undefined,
-          instrumental: song.instrumental ?? undefined,
+      }
+      // Custom mode: Lyrics + prompt
+      else if (song.lyrics && song.prompt) {
+        endpoint = env.GENERATE_WITH_LYRICS ?? "";
+        body = {
+          lyrics: song.lyrics,
+          prompt: song.prompt,
+          ...commomParams,
         };
-
-        // Description of a song
-        if (song.fullDescribedSong) {
-          endpoint = env.GENERATE_FROM_DESCRIPTION ?? "";
-          body = {
-            full_described_song: song.fullDescribedSong,
-            ...commomParams,
-          };
-        }
-        // Custom mode: Lyrics + prompt
-        else if (song.lyrics && song.prompt) {
-          endpoint = env.GENERATE_WITH_LYRICS ?? "";
-          body = {
-            lyrics: song.lyrics,
-            prompt: song.prompt,
-            ...commomParams,
-          };
-        }
-        // Custom mode: Prompt + described lyrics
-        else if (song.describedLyrics && song.prompt) {
-          endpoint = env.GENERATE_FROM_DESCRIBED_LYRICS ?? "";
-          body = {
-            described_lyrics: song.describedLyrics,
-            prompt: song.prompt,
-            ...commomParams,
-          };
-        }
-
-        return {
-          userId: song.user.id,
-          credits: song.user.credits,
-          endpoint: endpoint,
-          body: body,
+      }
+      // Custom mode: Prompt + described lyrics
+      else if (song.describedLyrics && song.prompt) {
+        endpoint = env.GENERATE_FROM_DESCRIBED_LYRICS ?? "";
+        body = {
+          described_lyrics: song.describedLyrics,
+          prompt: song.prompt,
+          ...commomParams,
         };
-      },
-    );
+      }
+
+      return {
+        userId: song.user.id,
+        credits: song.user.credits,
+        endpoint: endpoint,
+        body: body,
+      };
+    });
 
     if (credits > 0) {
       // Generate the song

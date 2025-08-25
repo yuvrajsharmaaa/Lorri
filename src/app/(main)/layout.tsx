@@ -14,10 +14,7 @@ import { Separator } from "~/components/ui/separator";
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "~/components/ui/breadcrumb";
 import BreadcrumbPageClient from "~/components/sidebar/breadcrumb-page-client";
 import SoundBar from "~/components/sound-bar";

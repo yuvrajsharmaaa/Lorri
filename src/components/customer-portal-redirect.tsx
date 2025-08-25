@@ -1,34 +1,13 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
- 
- 
+// src/components/customer-portal-redirect.tsx
 "use client";
 
-import { Loader2 } from "lucide-react";
-import { useEffect } from "react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { authClient } from "~/lib/auth-client";
+import { Button } from "~/components/ui/button";
 
 export default function CustomerPortalRedirect() {
-  useEffect(() => {
-    const portal = async () => {
-  
+  const handlePortal = () => {
+    // Redirect to your own account management
+    window.location.href = "/account";
+  };
 
-    };
-    void portal();
-  }, []);
-  
-
-  return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <div className="flex items-center gap-2">
-        <Loader2 className="h-5 w-5 animate-spin" />
-        <span className="text-muted-foreground">
-          Loading customer portal...
-        </span>
-      </div>
-    </div>
-  );
+  return <Button onClick={handlePortal}>Manage Account</Button>;
 }
-
-
-

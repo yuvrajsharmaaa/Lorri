@@ -1,16 +1,16 @@
-import { authViewPaths } from "@daveyplate/better-auth-ui/server";
+import { authViewPaths } from "@daveyplate/better-auth-ui";
 import { AuthView } from "./view";
 
 export function generateStaticParams() {
-  return Object.values(authViewPaths).map((pathname) => ({ pathname }));
+  return Object.values(authViewPaths).map((path) => ({ path })); // Use 'path', not 'pathname'
 }
 
 export default async function AuthPage({
   params,
 }: {
-  params: Promise<{ pathname: string }>;
+  params: Promise<{ path: string }>; // Use 'path', not 'pathname'
 }) {
-  const { pathname } = await params;
+  const { path } = await params; // Use 'path', not 'pathname'
 
-  return <AuthView pathname={pathname} />;
+  return <AuthView pathname={path} />; // Pass path as pathname prop
 }

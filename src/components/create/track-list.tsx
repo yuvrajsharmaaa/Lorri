@@ -1,14 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
- 
-/* eslint-disable @typescript-eslint/no-unused-vars */
- 
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-"use client";
 
+"use client";
 
 // In your component:
 
@@ -38,7 +31,6 @@ import {
 } from "../ui/dropdown-menu";
 import { RenameDialog } from "./rename-dialog";
 import { useRouter } from "next/navigation";
-import { usePlayerStore, type PlayerTrack } from "~/stores/use-player-store";
 
 export interface Track {
   id: string;
@@ -59,11 +51,9 @@ export interface Track {
 export function TrackList({ tracks }: { tracks: Track[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [loadingTrackId, setLoadingTrackId] = useState<string | null>(null);
+  const [loadingTrackId] = useState<string | null>(null);
   const [trackToRename, setTrackToRename] = useState<Track | null>(null);
   const router = useRouter();
-  
-  const setTrack = usePlayerStore((state) => state.setTrack);
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -245,7 +235,7 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                               onClick={async (e) => {
                                 e.stopPropagation();
                                 const playUrl = await getPlayUrl(track.id);
-                                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
                                 window.open(playUrl, "_blank");
                               }}
                             >

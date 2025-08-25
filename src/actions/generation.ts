@@ -1,7 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+ 
+ 
+ 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use server";
 
@@ -27,8 +30,10 @@ export async function generateSong(generateRequest: GenerateRequest) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+  
 
   if (!session) redirect("/auth/sign-in");
+  const user = session.user as { id: string; email?: string | null; name?: string | null };
 
   await queueSong(generateRequest, 7.5, session.user.id);
   await queueSong(generateRequest, 15, session.user.id);
