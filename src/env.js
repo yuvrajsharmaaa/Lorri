@@ -5,33 +5,33 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     BETTER_AUTH_SECRET: z.string(),
-    BETTER_AUTH_URL: z.string().url().optional().default("http://localhost:3000"),
     DATABASE_URL: z.string(),
-    NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-    
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
+
     // Modal - optional for now
     MODAL_KEY: z.string().optional(),
     MODAL_SECRET: z.string().optional(),
-    
+
     // AWS - optional for now
     AWS_ACCESS_KEY_ID: z.string().optional(),
     AWS_SECRET_ACCESS_KEY: z.string().optional(),
     AWS_REGION: z.string().default("us-east-1"),
     S3_BUCKET_NAME: z.string().optional(),
-    
+
     // GitHub OAuth - optional
     GITHUB_CLIENT_ID: z.string().optional(),
     GITHUB_CLIENT_SECRET: z.string().optional(),
-    
+
     // Modal API Endpoints - optional
     GENERATE_FROM_DESCRIPTION: z.string().url().optional(),
     GENERATE_FROM_DESCRIBED_LYRICS: z.string().url().optional(),
     GENERATE_WITH_LYRICS: z.string().url().optional(),
-    
+
     POLAR_ACCESS_TOKEN: z.string().optional(),
     POLAR_WEBHOOK_SECRET: z.string().optional(),
   },
-
 
   client: {
     NEXT_PUBLIC_BASE_URL: z.string().url().optional(),
@@ -39,7 +39,6 @@ export const env = createEnv({
 
   runtimeEnv: {
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
-    BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     MODAL_KEY: process.env.MODAL_KEY,
