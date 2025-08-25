@@ -1,0 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import { create } from "zustand";
+
+export interface PlayerTrack {
+  id: string;
+  title: string | null;
+  url: string | null;
+  artwork?: string | null;
+  prompt: string | null;
+  createdByUserName: string | null;
+}
+
+interface PlayerState {
+  track: PlayerTrack | null;
+  setTrack: (track: PlayerTrack) => void;
+}
+
+export const usePlayerStore = create<PlayerState>((set) => ({
+  track: null,
+  setTrack: (track) => set({ track }),
+}));
