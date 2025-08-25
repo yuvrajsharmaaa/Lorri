@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // src/app/(auth)/auth/[path]/page.tsx
 import { authViewPaths } from "@daveyplate/better-auth-ui/server";
-import { AuthView } from "@daveyplate/better-auth-ui"; // ✅ Import component from main package
+import { AuthCard } from "@daveyplate/better-auth-ui"; // ✅ Use AuthCard instead
 
 export const dynamicParams = false;
 
@@ -17,7 +19,7 @@ export default async function AuthPage({
 
   return (
     <main className="container flex grow flex-col items-center justify-center self-center p-4 md:p-6">
-      <AuthView path={path} />
+      <AuthCard view={path as any} />
     </main>
   );
 }
