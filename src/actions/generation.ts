@@ -35,10 +35,19 @@ export async function generateSong(generateRequest: GenerateRequest) {
   if (!session) redirect("/auth/sign-in");
   const user = session.user as { id: string; email?: string | null; name?: string | null };
 
-  await queueSong(generateRequest, 7.5, session.user.id);
-  await queueSong(generateRequest, 15, session.user.id);
+  console.log("Starting song generation for user:", user.id);
+  console.log("Generate request:", generateRequest);
 
-  revalidatePath("/create");
+  try {
+    await queueSong(generateRequest, 7.5, session.user.id);
+    await queueSong(generateRequest, 15, session.user.id);
+    
+    console.log("Successfully queued songs for generation");
+    revalidatePath("/create");
+  } catch (error) {
+    console.error("Error in generateSong:", error);
+    throw new Error("Failed to queue song generation");
+  }
 }
 
 export async function queueSong(
@@ -52,6 +61,8 @@ export async function queueSong(
     title = generateRequest.fullDescribedSong;
 
   title = title.charAt(0).toUpperCase() + title.slice(1);
+
+  console.log("Creating song in database:", { title, userId, guidanceScale });
 
   const song = await db.song.create({
     data: {
@@ -67,10 +78,18 @@ export async function queueSong(
     },
   });
 
-  await inngest.send({
-    name: "generate-song-event",
-    data: { songId: song.id, userId: song.userId },
-  });
+  console.log("Song created with ID:", song.id);
+
+  try {
+    await inngest.send({
+      name: "generate-song-event",
+      data: { songId: song.id, userId: song.userId },
+    });
+    console.log("Inngest event sent successfully for song:", song.id);
+  } catch (error) {
+    console.error("Failed to send inngest event:", error);
+    throw error;
+  }
 }
 
 export async function getPlayUrl(songId: string) {
