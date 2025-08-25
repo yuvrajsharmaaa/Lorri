@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Loader2 } from "lucide-react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -9,7 +10,6 @@ import TrackListFetcher from "~/components/create/track-list-fetcher";
 import { auth } from "~/lib/auth";
 
 export default async function Page() {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   const session = await auth.api.getSession({
     headers: await headers(),
   });
