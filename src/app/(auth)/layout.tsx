@@ -5,6 +5,7 @@ import { Geist } from "next/font/google";
 import { Providers } from "~/components/providers";
 import { Toaster } from "~/components/ui/sonner";
 
+
 export const metadata: Metadata = {
   title: "Music Generator",
   description: "Music Generator",

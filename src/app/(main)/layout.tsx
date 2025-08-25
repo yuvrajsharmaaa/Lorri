@@ -18,6 +18,8 @@ import {
 } from "~/components/ui/breadcrumb";
 import BreadcrumbPageClient from "~/components/sidebar/breadcrumb-page-client";
 import SoundBar from "~/components/sound-bar";
+import type { ReactNode } from "react"
+
 
 export const metadata: Metadata = {
   title: "Home",
@@ -30,10 +32,8 @@ const geist = Geist({
   variable: "--font-geist-sans",
 });
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  return (
+export default function RootLayout({ children }: { children: ReactNode }) {
+    return (
     <html lang="en" className={`${geist.variable}`}>
       <body>
         <Providers>

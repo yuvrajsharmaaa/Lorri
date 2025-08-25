@@ -1,11 +1,6 @@
- 
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable jsx-a11y/alt-text */
- 
- 
- 
- 
- 
+
 "use client";
 
 import type { Category, Like, Song } from "@prisma/client";
@@ -36,9 +31,8 @@ export function SongCard({ song }: { song: SongWithRelation }) {
     setIsLoading(true);
     const playUrl = await getPlayUrl(song.id);
 
-
-  const { setTrack } = usePlayerStore();
-    setTrack ({
+    const { setTrack } = usePlayerStore();
+    setTrack({
       id: song.id,
       title: song.title,
       url: playUrl,
