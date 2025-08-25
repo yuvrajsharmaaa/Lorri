@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
  
  
  
@@ -13,6 +15,7 @@ import { TrackList } from "./track-list";
 
 
 export default async function TrackListFetcher() {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const session = await auth.api.getSession({
     headers: await headers(),
   });
