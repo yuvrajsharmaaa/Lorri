@@ -168,6 +168,19 @@ Participate in the decentralized music marketplace:
 
 ---
 
+## Screenshots
+
+<div align="center">
+
+
+![Music Creation](https://github.com/yuvrajsharmaaa/Lorri/blob/main/assests/Screenshot%202025-08-25%20232826.png)
+![NFT Marketplace](https://github.com/yuvrajsharmaaa/Lorri/blob/main/assests/WhatsApp%20Image%202025-08-26%20at%2022.38.38_67213716.jpg)
+
+
+</div>
+
+---
+
 ## 🎨 Features
 
 ### **Music Creation**
@@ -234,20 +247,7 @@ Participate in the decentralized music marketplace:
 - **Network Fee**: ~0.000005 SOL per transaction
 - **Creator Receives**: 95% of sale price
 
----
 
-## 📱 Screenshots
-
-<div align="center">
-
-![Landing Page](https://via.placeholder.com/800x400/6366f1/ffffff?text=Stunning+Landing+Page)
-![Music Creation](https://via.placeholder.com/800x400/ec4899/ffffff?text=AI+Music+Generation)
-![NFT Marketplace](https://via.placeholder.com/800x400/10b981/ffffff?text=Solana+NFT+Marketplace)
-![Web3 Payments](https://via.placeholder.com/800x400/f59e0b/ffffff?text=Web3+Payment+System)
-
-</div>
-
----
 
 ## 🔧 Development
 
