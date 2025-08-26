@@ -29,12 +29,19 @@ export const env = createEnv({
     GENERATE_FROM_DESCRIBED_LYRICS: z.string().url().optional(),
     GENERATE_WITH_LYRICS: z.string().url().optional(),
 
+    // Solana Configuration
+    SOLANA_RPC_URL: z.string().default("https://api.devnet.solana.com"),
+    SOLANA_NETWORK: z.enum(["mainnet-beta", "devnet", "testnet"]).default("devnet"),
+    SOLANA_PRIVATE_KEY: z.string().optional(), // For server-side transactions
+
     //POLAR_ACCESS_TOKEN: z.string().optional(),
     //POLAR_WEBHOOK_SECRET: z.string().optional(),
   },
 
   client: {
     NEXT_PUBLIC_BASE_URL: z.string().url().optional(),
+    NEXT_PUBLIC_SOLANA_RPC_URL: z.string().default("https://api.devnet.solana.com"),
+    NEXT_PUBLIC_SOLANA_NETWORK: z.enum(["mainnet-beta", "devnet", "testnet"]).default("devnet"),
   },
 
   runtimeEnv: {
@@ -52,9 +59,14 @@ export const env = createEnv({
     GENERATE_FROM_DESCRIPTION: process.env.GENERATE_FROM_DESCRIPTION,
     GENERATE_FROM_DESCRIBED_LYRICS: process.env.GENERATE_FROM_DESCRIBED_LYRICS,
     GENERATE_WITH_LYRICS: process.env.GENERATE_WITH_LYRICS,
+    SOLANA_RPC_URL: process.env.SOLANA_RPC_URL,
+    SOLANA_NETWORK: process.env.SOLANA_NETWORK,
+    SOLANA_PRIVATE_KEY: process.env.SOLANA_PRIVATE_KEY,
     //POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN,
     //POLAR_WEBHOOK_SECRET: process.env.POLAR_WEBHOOK_SECRET,
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+    NEXT_PUBLIC_SOLANA_RPC_URL: process.env.NEXT_PUBLIC_SOLANA_RPC_URL,
+    NEXT_PUBLIC_SOLANA_NETWORK: process.env.NEXT_PUBLIC_SOLANA_NETWORK,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

@@ -20,7 +20,6 @@ import BreadcrumbPageClient from "~/components/sidebar/breadcrumb-page-client";
 import SoundBar from "~/components/sound-bar";
 import type { ReactNode } from "react"
 
-
 export const metadata: Metadata = {
   title: "Home",
   description: "Music Generator",

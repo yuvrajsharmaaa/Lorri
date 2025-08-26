@@ -23,6 +23,8 @@ model User {
   credits       Int       @default(100)
   likes         Like[]
   songs         Song[]
+  purchases     Purchase[]
+  walletAddress String?   // User's Solana wallet address
 
   @@unique([email])
   @@map("user")
@@ -47,6 +49,14 @@ model Song {
   listenCount       Int        @default(0)
   likes             Like[]
   categories        Category[]
+  purchases         Purchase[]
+  
+  // NFT and Payment fields
+  price             Float?     @default(0.0)  // Price in SOL
+  isForSale         Boolean    @default(false)
+  nftMintAddress    String?    // Solana NFT mint address
+  nftMetadata       String?    // JSON metadata for NFT
+  royaltyPercentage Float?     @default(5.0)  // Royalty percentage for creator
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -55,6 +65,25 @@ model Song {
   userId String
 
   @@index([s3Key])
+}
+
+model Purchase {
+  id              String   @id @default(cuid())
+  song            Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  songId          String
+  buyer           User     @relation(fields: [buyerId], references: [id], onDelete: Cascade)
+  buyerId         String
+  sellerId        String   // ID of the song creator
+  amount          Float    // Amount paid in SOL
+  transactionHash String?  // Solana transaction hash
+  nftMintAddress  String?  // NFT mint address if created
+  status          String   @default("pending") // pending, completed, failed
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([songId])
+  @@index([buyerId])
+  @@index([transactionHash])
 }
 
 model Like {
