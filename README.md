@@ -9,8 +9,6 @@
 
 **Transform your ideas into unique music tracks using cutting-edge AI, then buy, sell, and trade them on the Solana blockchain.**
 
-[🚀 Live Demo](#) • [📖 Documentation](#) • [💬 Discord](#) • [🐛 Report Bug](#)
-
 </div>
 
 ---
